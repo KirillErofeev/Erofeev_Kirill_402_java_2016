@@ -1,6 +1,8 @@
 package ru.itis.inform.store.dao.models;
 
-public class Item {
+import java.io.Serializable;
+
+public class Item implements Serializable{
     String name;
 
     public Item(String name) {

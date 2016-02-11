@@ -12,17 +12,37 @@ public class ItemsDaoFileBasedImpl implements ItemsDao {
     // проект с гитхаба сфоркать, и доделать в своем репозитории
     // как у Абрамского
 
-    private static ArrayList<Item> items;
+    private static  ArrayList<Item> items;
+
+    public void add(String itemName){//debug
+        init();
+        items.add(new Item(itemName));
+        save();
+    }
+
+    public void printItems(){//debug
+        init();
+        for(Item item:items){
+            System.out.println(item.getName());
+        }
+    }
 
     public void delete(String itemName) {
         init();
-        for (Item item: items) {
+
+        for (int i = 0; i < items.size(); i++) {
+            Item item = items.get(i);
             if(item.getName().equals(itemName)) {
                 items.remove(item);
-                //break;  TODO Do i have to used "break" here?
                 // TODO Do i have to used removing by index for more performance?
             }
         }
+//        for (Item item: items) {
+//            if(item.getName().equals(itemName)) {
+//                items.remove(item);
+//                // TODO Do i have to used removing by index for more performance?
+//            }
+//        }
         save();
         return;
     }
@@ -43,12 +63,20 @@ public class ItemsDaoFileBasedImpl implements ItemsDao {
             try {
                 File e = new File(
                         "/home/love/Projects/Java/Store/src/main/java/ru/itis/inform/store/dao/data/items.ser");
+
+
                 if(e.exists()) {
-                    ObjectInputStream in = new ObjectInputStream(new FileInputStream(
-                            "/home/love/Projects/Java/Store/src/main/java/ru/itis/inform/store/dao/data/items.ser"
-                    ));
-                    items = (ArrayList) in.readObject();
-                    in.close();
+
+                        FileInputStream fis = new FileInputStream(
+                                "/home/love/Projects/Java/Store/src/main/java/ru/itis/inform/store/dao/data/items.ser"
+                        );
+                        ObjectInputStream in = new ObjectInputStream(fis);
+
+                        items = (ArrayList) in.readObject();
+
+                        in.close();
+                        fis.close();
+
                 } else {
                     items = new ArrayList();
                     //System.out.println("New storage is created");
@@ -63,11 +91,14 @@ public class ItemsDaoFileBasedImpl implements ItemsDao {
     }
 
     private static void save() {
+
         try {
-            ObjectOutputStream e = new ObjectOutputStream(new FileOutputStream(
-                    "/home/love/Projects/Java/Store/src/main/java/ru/itis/inform/store/dao/data/items.ser"));
+            FileOutputStream fos = new FileOutputStream(
+                    "/home/love/Projects/Java/Store/src/main/java/ru/itis/inform/store/dao/data/items.ser");
+            ObjectOutputStream e = new ObjectOutputStream(fos);
             e.writeObject(items);
             e.close();
+            fos.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
