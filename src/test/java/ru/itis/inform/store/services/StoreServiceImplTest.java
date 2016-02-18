@@ -5,12 +5,17 @@ package ru.itis.inform.store.services;
  */
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import ru.itis.inform.store.dao.ItemsDao;
 import ru.itis.inform.store.dao.models.Item;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.logging.LogManager;
 
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -25,9 +30,20 @@ public class StoreServiceImplTest {
     @Mock
     ItemsDao itemsDao;
 
+    @BeforeClass
+    public static void readLogProperties(){
+        try {
+            FileInputStream r = new FileInputStream(
+                    "/home/love/Projects/Java/Store/src/main/java/ru/itis/inform/store/log.properties"
+            );
+            LogManager.getLogManager().readConfiguration(r);
+        } catch (IOException e) {
+            System.err.println("Could not setup logger configuration: " + e.toString());
+        }
+    }
+
     @Before
     public void setUp() throws Exception {
-
         //buy
         {
             // Выброс исключения, если пришла какая-либо строка, которая не Tovar

@@ -3,7 +3,12 @@ package ru.itis.inform.store.services;
 
 import ru.itis.inform.store.dao.ItemsDao;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class StoreServiceImpl implements StoreService {
+
+    private static Logger log = Logger.getLogger(StoreServiceImpl.class.getName());
 
     ItemsDao itemsDao;
 
@@ -13,6 +18,7 @@ public class StoreServiceImpl implements StoreService {
 
     public void buy(String itemName) {
         itemsDao.delete(itemName);
+        log.log(Level.INFO, "buy " + itemName);
     }
 
     public boolean isExist(String itemName) {

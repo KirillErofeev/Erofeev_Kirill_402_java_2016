@@ -17,3 +17,4 @@ effective-settings.xml
 *.lck
 *.jar
 target/
+/**/log/

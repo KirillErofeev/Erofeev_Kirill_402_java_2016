@@ -8,9 +8,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ItemsDaoFileBasedImpl implements ItemsDao {
-    private static Logger log = Logger.getLogger(
+    private static Logger log = Logger.getLogger(//TODO push log properties?
                     ItemsDaoFileBasedImpl.class.getName(),
-                    "src/main/java/ru/itis/inform/store/log/log.properties"
+                    "/home/love/Projects/Java/Store/src/main/java/ru/itis/inform/store/log.properties"
             );
 
     private static  ArrayList<Item> items;
@@ -64,10 +64,10 @@ public class ItemsDaoFileBasedImpl implements ItemsDao {
                     createNewItemslist();
                 }
             } catch (IOException e) {
-                log.log(Level.SEVERE, "Initialization to reading data", e);
+                log.log(Level.SEVERE, "Failed Initialization to reading data", e);
             } catch (ClassNotFoundException cln) {
                 createNewItemslist();
-                log.log(Level.SEVERE, "Initialization to reading data", cln);
+                log.log(Level.SEVERE, "Failed Initialization to reading data", cln);
             }
         }
 
@@ -86,7 +86,7 @@ public class ItemsDaoFileBasedImpl implements ItemsDao {
             e.close();
             fos.close();
         } catch (IOException e) {
-            log.log(Level.SEVERE, "Initialization to reading data", e);
+            log.log(Level.SEVERE, "Failed Initialization to reading data", e);
         }
     }
 }
