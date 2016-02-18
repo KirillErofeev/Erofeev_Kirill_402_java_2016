@@ -4,33 +4,19 @@ import ru.itis.inform.store.dao.models.Item;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ItemsDaoFileBasedImpl implements ItemsDao {
-    // TODO: реализовать класс, возможно с использованием
-    // сериализации ArrayList, либо просто считывать данные из
-    // файла в ArrayList
-    // проект с гитхаба сфоркать, и доделать в своем репозитории
-    // как у Абрамского
+    private static Logger log = Logger.getLogger(
+                    ItemsDaoFileBasedImpl.class.getName(),
+                    "src/main/java/ru/itis/inform/store/log/log.properties"
+            );
 
     private static  ArrayList<Item> items;
 
-    public void add(String itemName){//debug
-        init();
-        items.add(new Item(itemName));
-        save();
-    }
-
-    public void printItems(){//debug
-        init();
-
-        for(Item item:items){
-            System.out.println(item.getName());
-        }
-    }
-
     public void delete(String itemName) {
         init();
-
         for (int i = 0; i < items.size(); i++) {
             Item item = items.get(i);
             if(item.getName().equals(itemName)) {
@@ -38,7 +24,6 @@ public class ItemsDaoFileBasedImpl implements ItemsDao {
 
             }
         }
-
         save();
         return;
     }
@@ -62,32 +47,37 @@ public class ItemsDaoFileBasedImpl implements ItemsDao {
 
 
                 if(e.exists()) {
-
-                        FileInputStream fis = new FileInputStream(
-                                "/home/love/Projects/Java/Store/src/main/java/ru/itis/inform/store/dao/data/items.ser"
-                        );
-                        ObjectInputStream in = new ObjectInputStream(fis);
-
-                        items = (ArrayList) in.readObject();
-
+                    FileInputStream fis = new FileInputStream(
+                            "/home/love/Projects/Java/Store/src/main/java/ru/itis/inform/store/dao/data/items.ser"
+                    );
+                    ObjectInputStream in = new ObjectInputStream(fis);
+                    Object objList = in.readObject();
+                    if(objList instanceof ArrayList){
+                        items = (ArrayList<Item>) in.readObject();//TODO improve
+                    }else{
+                        createNewItemslist();
+                        log.log(Level.SEVERE, "Unreadable data");
+                    }
                         in.close();
                         fis.close();
-
                 } else {
-                    items = new ArrayList();
-                    //System.out.println("New storage is created");
+                    createNewItemslist();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                log.log(Level.SEVERE, "Initialization to reading data", e);
             } catch (ClassNotFoundException cln) {
-                cln.printStackTrace();
+                createNewItemslist();
+                log.log(Level.SEVERE, "Initialization to reading data", cln);
             }
         }
 
     }
 
-    private static void save() {
+    private static void createNewItemslist(){
+        items = new ArrayList<Item>();
+    }
 
+    private static void save() {
         try {
             FileOutputStream fos = new FileOutputStream(
                     "/home/love/Projects/Java/Store/src/main/java/ru/itis/inform/store/dao/data/items.ser");
@@ -96,10 +86,7 @@ public class ItemsDaoFileBasedImpl implements ItemsDao {
             e.close();
             fos.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.log(Level.SEVERE, "Initialization to reading data", e);
         }
-
     }
-
-
 }

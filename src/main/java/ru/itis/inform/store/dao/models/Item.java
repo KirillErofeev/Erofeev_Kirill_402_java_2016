@@ -3,7 +3,7 @@ package ru.itis.inform.store.dao.models;
 import java.io.Serializable;
 
 public class Item implements Serializable{
-    String name;
+    String name;//TODO implement ORM
 
     public Item(String name) {
         this.name = name;

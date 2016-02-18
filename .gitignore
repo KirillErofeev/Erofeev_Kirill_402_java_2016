@@ -1,3 +1,4 @@
+*~
 .settings/
 .project
 .classpath
@@ -15,3 +16,4 @@ effective-settings.xml
 *.log
 *.lck
 *.jar
+target/
