@@ -9,9 +9,7 @@ import java.util.logging.Logger;
 
 public class ItemsDaoFileBasedImpl implements ItemsDao {
     private static Logger log = Logger.getLogger(//TODO push log properties?
-                    ItemsDaoFileBasedImpl.class.getName(),
-                    "/home/love/Projects/Java/Store/src/main/java/ru/itis/inform/store/log.properties"
-            );
+                    ItemsDaoFileBasedImpl.class.getName());
 
     private static  ArrayList<Item> items;
 

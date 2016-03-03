@@ -16,6 +16,18 @@ public class StoreServiceImpl implements StoreService {
         this.itemsDao = itemsDao;
     }
 
+    public void setItemsDao(ItemsDao itemsDao){ // xml conf
+        this.itemsDao = itemsDao;
+    }
+
+    public void testShowDao(){
+        System.out.println(itemsDao.toString());
+    }
+
+    public StoreServiceImpl() {
+
+    }
+
     public void buy(String itemName) {
         itemsDao.delete(itemName);
         log.log(Level.INFO, "buy " + itemName);
