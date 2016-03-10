@@ -1,13 +1,13 @@
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.itis.inform.store.dao.ItemsDao;
-import ru.itis.inform.store.dao.ItemsDaoFileBasedImpl;
-import ru.itis.inform.store.services.ServiceSupportFactory;
+import ru.itis.inform.store.dao.config.ItemsDaoConfig;
+import ru.itis.inform.store.dao.ItemsDaoCsvImpl;
+import ru.itis.inform.store.dao.models.Item;
 import ru.itis.inform.store.services.StoreService;
 import ru.itis.inform.store.services.StoreServiceImpl;
 
 import java.io.*;
-import java.util.Scanner;
 import java.util.logging.LogManager;
 
 /**
@@ -23,7 +23,7 @@ public class Main  {
             System.err.println("Could not setup logger configuration: " + e.toString());
         }
 
-
+// XML Annotation
 //        ApplicationContext context =
 //                new ClassPathXmlApplicationContext("app-context.xml");
 //
@@ -32,12 +32,22 @@ public class Main  {
 //
 //        service.testShowDao();
 
-        StoreService service =
-                ServiceSupportFactory.getInstance().getStoreService();
-        ItemsDao itemsDao =
-                ServiceSupportFactory.getInstance().getItemsDao();
-        service.setItemsDao(itemsDao);
-        service.testShowDao();
+//        properties Annotation
+//        StoreService service =
+//                ServiceSupportFactory.getInstance().getStoreService();
+//        ItemsDao itemsDao =
+//                ServiceSupportFactory.getInstance().getItemsDao();
+//        service.setItemsDao(itemsDao);
+//        service.testShowDao();
+
+        ApplicationContext ctx =
+                new AnnotationConfigApplicationContext(ItemsDaoConfig.class);
+
+        StoreService storeService= ctx.getBean(StoreServiceImpl.class);
+        ItemsDao itemsDao = ctx.getBean(ItemsDaoCsvImpl.class);
+
+        storeService.setItemsDao(itemsDao);
+        storeService.testShowDao();
 
         }
     }
