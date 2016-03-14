@@ -1,5 +1,6 @@
 package ru.itis.inform.store.dao;
 
+import org.springframework.stereotype.Component;
 import ru.itis.inform.store.Properties;
 import ru.itis.inform.store.dao.models.Item;
 
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@Component
 public class ItemsDaoFileBasedImpl implements ItemsDao {
     private static Logger log = Logger.getLogger(//TODO push log properties?
                     ItemsDaoFileBasedImpl.class.getName());

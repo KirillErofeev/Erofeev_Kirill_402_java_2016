@@ -4,6 +4,7 @@ import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 import com.univocity.parsers.csv.CsvWriter;
 import com.univocity.parsers.csv.CsvWriterSettings;
+import org.springframework.stereotype.Component;
 import ru.itis.inform.store.Properties;
 import ru.itis.inform.store.dao.models.Item;
 
@@ -20,7 +21,7 @@ import java.util.logging.Logger;
  * Created by love on 03.03.16.
  */
 
-
+@Component
 public class ItemsDaoCsvImpl implements ItemsDao {
     FileReader fr;
     CsvParser parser;

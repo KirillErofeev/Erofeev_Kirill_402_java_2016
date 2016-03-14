@@ -6,6 +6,7 @@ import com.univocity.parsers.tsv.TsvWriter;
 import com.univocity.parsers.tsv.TsvWriterSettings;
 import com.univocity.parsers.tsv.TsvParser;
 import com.univocity.parsers.tsv.TsvParserSettings;
+import org.springframework.stereotype.Component;
 import ru.itis.inform.store.Properties;
 import ru.itis.inform.store.dao.models.Item;
 
@@ -20,6 +21,9 @@ import java.util.logging.Logger;
 /**
  * Created by love on 03.03.16.
  */
+
+
+@Component
 public class ItemsDaoTsvImpl implements ItemsDao {
     FileReader fr;
     TsvParser parser;

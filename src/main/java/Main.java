@@ -3,6 +3,7 @@ import com.univocity.parsers.tsv.TsvWriter;
 import com.univocity.parsers.tsv.TsvWriterSettings;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.itis.inform.store.Properties;
 import ru.itis.inform.store.dao.ItemsDaoCsvImpl;
 import ru.itis.inform.store.dao.ItemsDaoTsvImpl;
@@ -38,7 +39,7 @@ public class Main  {
 //        TsvWriter writer = new TsvWriter(w, new TsvWriterSettings());
 //        writer.writeRowsAndClose(rows);
 
-// XML Annotation
+// XML Configuration
 //        ApplicationContext context =
 //                new ClassPathXmlApplicationContext("app-context.xml");
 //
@@ -47,6 +48,7 @@ public class Main  {
 //
 //        service.testShowDao();
 
+//        Annotation Configuration
 //        properties Annotation
 //        StoreService service =
 //                ServiceSupportFactory.getInstance().getStoreService();
@@ -55,12 +57,21 @@ public class Main  {
 //        service.setItemsDao(itemsDao);
 //        service.testShowDao();
 
+
+//@Bean Configuration
 //        ApplicationContext ctx =
 //                new AnnotationConfigApplicationContext(ItemsDaoConfig.class);
 //
 //        StoreService storeService= ctx.getBean(StoreServiceImpl.class);
 //        storeService.testShowDao();
 
+
+//Auto Configuration
+        ApplicationContext context =
+                new ClassPathXmlApplicationContext(new String[] {"AutoConfiguration.xml"});
+
+        StoreService storeService = (StoreService) context.getBean("storeServiceImpl");//Why first letter lower Case?
+        storeService.testShowDao();
         }
     }
 
