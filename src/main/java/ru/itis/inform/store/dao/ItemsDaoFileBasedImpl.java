@@ -1,5 +1,6 @@
 package ru.itis.inform.store.dao;
 
+import ru.itis.inform.store.Properties;
 import ru.itis.inform.store.dao.models.Item;
 
 import java.io.*;
@@ -40,14 +41,9 @@ public class ItemsDaoFileBasedImpl implements ItemsDao {
     private void init() {
         if(items == null) {
             try {
-                File e = new File(
-                        "/home/love/Projects/Java/Store/src/main/java/ru/itis/inform/store/dao/data/items.ser");
-
-
+                File e = new File(Properties.getProperty("fileData"));
                 if(e.exists()) {
-                    FileInputStream fis = new FileInputStream(
-                            "/home/love/Projects/Java/Store/src/main/java/ru/itis/inform/store/dao/data/items.ser"
-                    );
+                    FileInputStream fis = new FileInputStream(Properties.getProperty("fileData"));
                     ObjectInputStream in = new ObjectInputStream(fis);
                     Object objList = in.readObject();
                     if(objList instanceof ArrayList){
@@ -77,8 +73,7 @@ public class ItemsDaoFileBasedImpl implements ItemsDao {
 
     private static void save() {
         try {
-            FileOutputStream fos = new FileOutputStream(
-                    "/home/love/Projects/Java/Store/src/main/java/ru/itis/inform/store/dao/data/items.ser");
+            FileOutputStream fos = new FileOutputStream(Properties.getProperty("fileData"));
             ObjectOutputStream e = new ObjectOutputStream(fos);
             e.writeObject(items);
             e.close();

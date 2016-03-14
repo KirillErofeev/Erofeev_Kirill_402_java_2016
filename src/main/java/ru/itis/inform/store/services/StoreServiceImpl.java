@@ -1,6 +1,8 @@
 package ru.itis.inform.store.services;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import ru.itis.inform.store.dao.ItemsDao;
 
 import java.util.logging.Level;
@@ -16,6 +18,8 @@ public class StoreServiceImpl implements StoreService {
         this.itemsDao = itemsDao;
     }
 
+    @Autowired
+    @Qualifier("itemsDaoCsvImpl")
     public void setItemsDao(ItemsDao itemsDao){ // xml conf
         this.itemsDao = itemsDao;
     }
